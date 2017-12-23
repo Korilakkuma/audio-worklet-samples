@@ -1,0 +1,28 @@
+{
+  "name": "audio-worklet-samples",
+  "version": "0.0.0",
+  "description": "AudioWorklet samples",
+  "main": "",
+  "scripts": {
+    "lint": "eslint samples/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Korilakkuma/audio-worklet-samples.git"
+  },
+  "keywords": [
+    "Web Audio API",
+    "AudioWorklet"
+  ],
+  "author": "Korilakkuma <rilakkuma.san.xjapan@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Korilakkuma/audio-worklet-samples/issues"
+  },
+  "homepage": "https://github.com/Korilakkuma/audio-worklet-samples",
+  "devDependencies": {
+    "babel-eslint": "^8.1.0",
+    "eslint": "^4.5.0",
+    "eslint-cli": "^1.1.1"
+  }
+}
