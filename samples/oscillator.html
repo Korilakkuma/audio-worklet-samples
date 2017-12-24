@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Oscillator | AudioWorklet samples</title>
+    <link rel="stylesheet" href="../style.css" type="text/css" media="all" />
+    <script type="text/javascript" src="main-scripts/oscillator.js"></script>
+</head>
+<body>
+    <section>
+        <h1>Oscillator</h1>
+        <form>
+            <label><input type="radio" name="radio-wave-type" value="sine" checked /> SINE</label>
+            <label><input type="radio" name="radio-wave-type" value="square" /> SQUARE</label>
+            <label><input type="radio" name="radio-wave-type" value="sawtooth" /> SAWTOOTH</label>
+            <label><input type="radio" name="radio-wave-type" value="triangle" /> TRIANGLE</label>
+        </form>
+        <div>
+            <label><input type="number" value="440" min="20" max="22050" step="1" /> FREQUENCY</label>
+            <button type="button">START</button>
+        </div>
+    </section>
+</body>
+</html>
