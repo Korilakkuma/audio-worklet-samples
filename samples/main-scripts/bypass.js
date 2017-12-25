@@ -4,10 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const context = new AudioContext();
 
     let oscillator = null;
-    let bypass     = null;
 
     context.audioWorklet.addModule('./worklet-scripts/bypass.js').then(() => {
-        bypass = new AudioWorkletNode(context, 'bypass');
+        const bypass = new AudioWorkletNode(context, 'bypass');
 
         document.querySelector('button').addEventListener('click', event => {
             const button = event.currentTarget;

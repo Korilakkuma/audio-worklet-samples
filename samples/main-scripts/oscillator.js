@@ -3,12 +3,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const context = new AudioContext();
 
-    let oscillator = null;
-    let type       = 'sine';
-    let frequency  = 440;
+    let type      = 'sine';
+    let frequency = 440;
 
     context.audioWorklet.addModule('./worklet-scripts/oscillator.js').then(() => {
-        oscillator = new AudioWorkletNode(context, 'oscillator');
+        const oscillator = new AudioWorkletNode(context, 'oscillator');
 
         document.querySelector('button').addEventListener('click', event => {
             const button = event.currentTarget;

@@ -3,11 +3,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const context = new AudioContext();
 
-    let source          = null;
-    let channelReverser = null;
+    let source = null;
 
     context.audioWorklet.addModule('./worklet-scripts/channel-reverser.js').then(() => {
-        channelReverser = new AudioWorkletNode(context, 'channel-reverser');
+        const channelReverser = new AudioWorkletNode(context, 'channel-reverser');
 
         document.querySelector('[type="file"]').addEventListener('change', event => {
             const file = event.target.files[0];

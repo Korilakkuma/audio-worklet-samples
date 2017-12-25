@@ -3,11 +3,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const context = new AudioContext();
 
-    let source        = null;
-    let vocalCanceler = null;
+    let source = null;
 
     context.audioWorklet.addModule('./worklet-scripts/vocal-canceler.js').then(() => {
-        vocalCanceler = new AudioWorkletNode(context, 'vocal-canceler');
+        const vocalCanceler = new AudioWorkletNode(context, 'vocal-canceler');
 
         document.querySelector('[type="file"]').addEventListener('change', event => {
             const file = event.target.files[0];

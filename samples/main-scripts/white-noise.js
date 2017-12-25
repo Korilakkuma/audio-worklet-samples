@@ -3,10 +3,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const context = new AudioContext();
 
-    let noiseGenerator = null;
-
     context.audioWorklet.addModule('./worklet-scripts/white-noise.js').then(() => {
-        noiseGenerator = new AudioWorkletNode(context, 'white-noise');
+        const noiseGenerator = new AudioWorkletNode(context, 'white-noise');
 
         document.querySelector('button').addEventListener('click', event => {
             const button = event.currentTarget;
