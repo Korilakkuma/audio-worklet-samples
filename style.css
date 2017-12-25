@@ -53,3 +53,7 @@ audio + label {
 audio + label [type="checkbox"] {
     vertical-align: 1px;
 }
+
+audio + label [type="range"] {
+    vertical-align: -3px;
+}
