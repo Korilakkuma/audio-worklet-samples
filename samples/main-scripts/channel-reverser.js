@@ -1,14 +1,18 @@
 'use strict';
 
-document.addEventListener('DOMContentLoaded', () => {
-    const context = new AudioContext();
+const context = new AudioContext();
 
+document.addEventListener('DOMContentLoaded', () => {
     let source = null;
 
     context.audioWorklet.addModule('./worklet-scripts/channel-reverser.js').then(() => {
         const channelReverser = new AudioWorkletNode(context, 'channel-reverser');
 
-        document.querySelector('[type="file"]').addEventListener('change', event => {
+        document.querySelector('[type="file"]').addEventListener('change', async (event) => {
+            if (context.state !== 'running') {
+                await context.resume();
+            }
+
             const file = event.target.files[0];
 
             if (file && file.type.includes('audio')) {

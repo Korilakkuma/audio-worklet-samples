@@ -1,16 +1,20 @@
 'use strict';
 
-document.addEventListener('DOMContentLoaded', () => {
-    const context = new AudioContext();
+const context = new AudioContext();
 
+document.addEventListener('DOMContentLoaded', () => {
     let type      = 'sine';
     let frequency = 440;
 
     context.audioWorklet.addModule('./worklet-scripts/oscillator.js').then(() => {
         const oscillator = new AudioWorkletNode(context, 'oscillator');
 
-        document.querySelector('button').addEventListener('click', event => {
-            const button = event.currentTarget;
+        document.querySelector('button').addEventListener('click', async (event) => {
+            if (context.state !== 'running') {
+                await context.resume();
+            }
+
+            const button = event.target;
 
             if (button.textContent === 'START') {
                 oscillator.connect(context.destination);

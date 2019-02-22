@@ -1,15 +1,19 @@
 'use strict';
 
-document.addEventListener('DOMContentLoaded', () => {
-    const context = new AudioContext();
+const context = new AudioContext();
 
+document.addEventListener('DOMContentLoaded', () => {
     let oscillator = null;
 
     context.audioWorklet.addModule('./worklet-scripts/bypass.js').then(() => {
         const bypass = new AudioWorkletNode(context, 'bypass');
 
-        document.querySelector('button').addEventListener('click', event => {
-            const button = event.currentTarget;
+        document.querySelector('button').addEventListener('click', async (event) => {
+            if (context.state !== 'running') {
+                await context.resume();
+            }
+
+            const button = event.target;
 
             if (button.textContent === 'START') {
                 oscillator = context.createOscillator();
