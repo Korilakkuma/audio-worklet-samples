@@ -2,41 +2,47 @@
 
 const context = new AudioContext();
 
-document.addEventListener('DOMContentLoaded', () => {
+const promise = context.audioWorklet.addModule('./worklet-scripts/vocal-canceler.js');
+
+promise
+  .then(() => {
+    const vocalCanceler = new AudioWorkletNode(context, 'vocal-canceler');
+
     let source = null;
 
-    context.audioWorklet.addModule('./worklet-scripts/vocal-canceler.js').then(() => {
-        const vocalCanceler = new AudioWorkletNode(context, 'vocal-canceler');
+    document.querySelector('[type="file"]').addEventListener('change', async (event) => {
+      if (context.state !== 'running') {
+        await context.resume();
+      }
 
-        document.querySelector('[type="file"]').addEventListener('change', async (event) => {
-            if (context.state !== 'running') {
-                await context.resume();
-            }
+      const file = event.target.files[0];
 
-            const file = event.target.files[0];
+      if (file && file.type.includes('audio')) {
+        const objectURL = window.URL.createObjectURL(file);
 
-            if (file && file.type.includes('audio')) {
-                const objectURL = window.URL.createObjectURL(file);
+        const audioElement = document.querySelector('audio');
 
-                const audioElement = document.querySelector('audio');
+        audioElement.src = objectURL;
 
-                audioElement.src = objectURL;
+        audioElement.addEventListener('loadstart', () => {
+          if (source === null) {
+            source = context.createMediaElementSource(audioElement);
+          }
 
-                audioElement.addEventListener('loadstart', () => {
-                    if (source === null) {
-                        source = context.createMediaElementSource(audioElement);
-                    }
+          source.connect(vocalCanceler);
+          vocalCanceler.connect(context.destination);
 
-                    source.connect(vocalCanceler);
-                    vocalCanceler.connect(context.destination);
-
-                    audioElement.play(0);
-                }, false);
-            }
+          audioElement.play(0);
         }, false);
+      }
+    }, false);
 
-        document.querySelector('[type="range"]').addEventListener('input', event => {
-            vocalCanceler.port.postMessage(event.currentTarget.valueAsNumber);
-        }, false);
-    });
-}, false);
+    document.querySelector('[type="range"]').addEventListener('change', (event) => {
+      const currentTime = context.currentTime;
+      const audioParam  = vocalCanceler.parameters.get('depth');
+
+      audioParam.setValueAtTime(audioParam.value, currentTime);
+      audioParam.linearRampToValueAtTime(event.currentTarget.valueAsNumber, currentTime + 5);
+    }, false);
+  })
+  .catch(console.error);
