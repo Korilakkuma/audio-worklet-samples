@@ -2,27 +2,28 @@
 
 const context = new AudioContext();
 
-document.addEventListener('DOMContentLoaded', () => {
+const promise = context.audioWorklet.addModule('./worklet-scripts/white-noise.js');
 
-    context.audioWorklet.addModule('./worklet-scripts/white-noise.js').then(() => {
-        const noiseGenerator = new AudioWorkletNode(context, 'white-noise');
+promise
+  .then(() => {
+    const noiseGenerator = new AudioWorkletNode(context, 'white-noise');
 
-        document.querySelector('button').addEventListener('click', async (event) => {
-            if (context.state !== 'running') {
-                await context.resume();
-            }
+    document.querySelector('button').addEventListener('click', async (event) => {
+      if (context.state !== 'running') {
+        await context.resume();
+      }
 
-            const button = event.target;
+      const button = event.target;
 
-            if (button.textContent === 'START') {
-                noiseGenerator.connect(context.destination);
+      if (button.textContent === 'START') {
+        noiseGenerator.connect(context.destination);
 
-                button.textContent = 'STOP';
-            } else {
-                noiseGenerator.disconnect(0);
+        button.textContent = 'STOP';
+      } else {
+        noiseGenerator.disconnect(0);
 
-                button.textContent = 'START';
-            }
-        }, false);
-    });
-}, false);
+        button.textContent = 'START';
+      }
+    }, false);
+  })
+  .catch(console.error);
