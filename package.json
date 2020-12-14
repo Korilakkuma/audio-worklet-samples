@@ -4,7 +4,21 @@
   "description": "AudioWorklet samples",
   "main": "",
   "scripts": {
-    "lint": "eslint samples/**/*.js"
+    "lint": "eslint samples/**/*.js && stylelint app.css",
+    "fix": "eslint --fix samples/**/*.js && stylelint --fix app.css"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "samples/**/*.js": [
+      "eslint --fix"
+    ],
+    "app.css": [
+      "stylelint --fix"
+    ]
   },
   "repository": {
     "type": "git",
@@ -23,6 +37,10 @@
   "devDependencies": {
     "babel-eslint": "^8.1.0",
     "eslint": "^4.5.0",
-    "eslint-cli": "^1.1.1"
+    "eslint-cli": "^1.1.1",
+    "husky": "^4.3.6",
+    "lint-staged": "^10.5.3",
+    "stylelint": "^13.8.0",
+    "stylelint-config-standard": "^20.0.0"
   }
 }

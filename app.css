@@ -1,6 +1,15 @@
 @charset "UTF-8";
 
-html, body, div, h1, ul, dl, dt, dd, form, section {
+html,
+body,
+div,
+h1,
+ul,
+dl,
+dt,
+dd,
+form,
+section {
   margin: 0;
   padding: 0;
 }
@@ -8,7 +17,7 @@ html, body, div, h1, ul, dl, dt, dd, form, section {
 body {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 16px;
-  color : #999;
+  color: #999;
   line-height: 1.5;
 }
 
@@ -36,7 +45,9 @@ a:hover {
   text-decoration: underline;
 }
 
-input, button, label {
+input,
+button,
+label {
   cursor: pointer;
   outline: none;
 }
