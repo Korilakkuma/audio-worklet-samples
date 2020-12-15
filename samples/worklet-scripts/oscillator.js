@@ -1,14 +1,12 @@
 'use strict';
 
 class Oscillator extends AudioWorkletProcessor {
-  static SAMPLE_RATE = 44100;
-
   static get parameterDescriptors() {
     return [{
       name          : 'frequency',
       defaultValue  : 440,
       minValue      : 20,
-      maxValue      : Oscillator.SAMPLE_RATE / 2,
+      maxValue      : sampleRate / 2,
       automationRate: 'a-rate'
     }];
   }
@@ -35,14 +33,14 @@ class Oscillator extends AudioWorkletProcessor {
 
       for (let i = 0, len = outputChannel.length; i < len; i++) {
         const frequency = parameters.frequency.length > 1 ? parameters.frequency[i] : parameters.frequency[0];
-        const t0        = Oscillator.SAMPLE_RATE / frequency;
+        const t0        = sampleRate / frequency;
 
         let output = 0;
         let s      = 0;
 
         switch (this.type) {
           case 'sine':
-            output = Math.sin((2 * Math.PI * frequency * this.n) / Oscillator.SAMPLE_RATE);
+            output = Math.sin((2 * Math.PI * frequency * this.n) / sampleRate);
             break;
           case 'square':
             output = (this.n < (t0 / 2)) ? 1 : -1;
