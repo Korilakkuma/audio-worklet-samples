@@ -1,5 +1,7 @@
 'use strict';
 
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
 const context = new AudioContext();
 
 const promise = context.audioWorklet.addModule('./worklet-scripts/oscillator.js');
